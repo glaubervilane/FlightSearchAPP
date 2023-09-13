@@ -1,0 +1,1 @@
+export { default as homebg } from './homebg.jpg'

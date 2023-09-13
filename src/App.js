@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom'
 import './App.css';
-import { Nav } from './components';
+import  Home  from './components/Home';
 
 function App() {
   return (
     <main>
-      <Nav />
+      <Home />
     </main>
   );
 }

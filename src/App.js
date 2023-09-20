@@ -1,15 +1,19 @@
-import { Routes, Route } from 'react-router-dom'
 import './App.css';
-import { Footer, Navbar } from './components';
-import  Home  from './components/Home';
+import  homebg  from './assets/imgs/homebg.jpg';
+import { Footer, Input } from './components';
 
 function App() {
   return (
-    <main className='flex-col justify-content'>
-      <Navbar />
-      <Home />
+    <div className='relative min-h-[100vh]'>
+      <div className=" pb-[2.5rem]">
+        <img src={homebg} alt="boat" height={29} className="" />
+        <div className="md:px-12">
+          <Input/>
+        </div>
+      </div>
+      <br/>
       <Footer />
-    </main>
+    </div>
   );
 }
 

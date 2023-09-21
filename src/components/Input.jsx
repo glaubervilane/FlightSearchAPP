@@ -1,4 +1,7 @@
 import { ArrowsRightLeftIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import InputDate from './InputDate'
+import InputDest from './InputDest'
+import InputOrig from './InputOrig'
 
 const Input = () => {
   return (
@@ -8,16 +11,15 @@ const Input = () => {
           <div className="p-2 text-center text-3xl md:text-5xl"> Flights </div>
           
           {/* trip selector */}
-            <select className="ml-4">
+            <select className="ml-4 dark:bg-slate-500 rounded-lg p-1">
               <option>Round Trip</option>
               <option>One Way</option>
             </select>
+            
           <div className="flex px-4 py-4 mb-6 justify-center items-center">
 
-              {/* input left side */}
-              <input type="text"
-              className=" search-bar text-left bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-[45%] hover:border-gray-700 border"
-              placeholder="Where from?" required/>
+              {/* input flight origin */}
+              < InputOrig />
           
               {/* Spacer */}
               <div className="flex-grow"></div>
@@ -26,13 +28,11 @@ const Input = () => {
               {/* Spacer */}
               <div className="flex-grow"></div>
 
-              {/* input right side */}
-              <input type="text"
-              className="search-bar ml-auto text-left bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 hover:border-gray-700 w-[45%]"
-              placeholder="Where to?" required
-              />
+              {/* input flight Destination */}
+              <InputDest />
+
           </div>
-          
+          <InputDate />
         </div>
         <div className="justify-center flex"><button className=" -mt-2 shadow-xl -mb-5 flex hover:font-bold hover:ring-cyan-950 bg-teal-200 rounded-[11px] p-1.5 text-slate-800 font-semibold"><MagnifyingGlassIcon className="h-5 w-5 mt-[3%] mr-1" />Explore</button></div>
     </div>

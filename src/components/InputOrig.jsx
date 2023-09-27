@@ -7,18 +7,14 @@ const InputOrig = ({ airportData }) => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    // Add an event listener to the document body to handle clicks outside the input and suggestions
     function handleDocumentClick(event) {
       if (inputRef.current && !inputRef.current.contains(event.target)) {
-        // Clicked outside the input and suggestions, so clear suggestions
         setSuggestions([]);
       }
     }
 
-    // Attach the event listener when the component mounts
     document.addEventListener('click', handleDocumentClick);
 
-    // Clean up the event listener when the component unmounts
     return () => {
       document.removeEventListener('click', handleDocumentClick);
     };
@@ -28,7 +24,6 @@ const InputOrig = ({ airportData }) => {
     const inputValue = event.target.value.toLowerCase();
     setValue(inputValue);
 
-    // Filter airportData based on user input (code, state, city, or tz) and prioritize matches in airport code
     const filteredSuggestions = airportData
       .filter((airport) => airport.code.toLowerCase().includes(inputValue))
       .concat(
@@ -76,9 +71,9 @@ const InputOrig = ({ airportData }) => {
               className='cursor-pointer p-2 hover:bg-gray-100 dark:hover:bg-gray-500 flex justify-between items-center'
               onClick={() => handleSuggestionClick(airport.code)}
             >
-              <div className='mr-2'>{airport.state || airport.country}</div>
-              <div className='mr-2'>{airport.city}</div>
-              <div className='mr-2'>{airport.code}</div>
+              <div className=''>{airport.state || airport.country}</div>
+              <div className='mr-1'>{airport.city}</div>
+              <div className=''>{airport.code}</div>
             </div>
           ))}
         </div>

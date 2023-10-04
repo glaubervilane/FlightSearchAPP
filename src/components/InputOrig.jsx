@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const InputOrig = ({ airportData }) => {
-  const [value, setValue] = useState('');
+const InputOrig = ({ airportData, setOriginCode, fetchDataOrig, setOriginSkyId }) => {
+  const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const maxSuggestions = 25;
   const inputRef = useRef(null);
@@ -21,8 +21,9 @@ const InputOrig = ({ airportData }) => {
   }, []);
 
   const onChange = (event) => {
-    const inputValue = event.target.value.toLowerCase();
+    const inputValue = event.target.value;
     setValue(inputValue);
+
 
     const filteredSuggestions = airportData
       .filter((airport) => airport.code.toLowerCase().includes(inputValue))
@@ -43,9 +44,22 @@ const InputOrig = ({ airportData }) => {
     setSuggestions(filteredSuggestions);
   };
 
-  const handleSuggestionClick = (code) => {
+  const handleSuggestionClick = async (code) => {
     setValue(code.toUpperCase());
     setSuggestions([]);
+    setOriginCode(code.toUpperCase());
+
+    try{
+      const entityId = await fetchDataOrig(code.toUpperCase());
+      if (entityId !== null) {
+        console.log("Fetched Origin entityId:", entityId);
+        setOriginSkyId(entityId);
+      } else {
+        console.error("No matching entityId found for origin.");
+      }
+    } catch (error) {
+      console.error("Error in fetching origin:", error);
+    }
   };
 
   return (
@@ -64,7 +78,7 @@ const InputOrig = ({ airportData }) => {
       />
 
       {suggestions.length > 0 && (
-        <div id='dataResult' className='bg-white border dark:bg-gray-700 border-gray-300 mt-1 rounded-lg shadow-md max-h-[150px] overflow-y-auto absolute'>
+        <div id='dataResult' className='bg-white border dark:bg-gray-700 border-gray-300 mt-1 rounded-lg shadow-md max-h-[150px] overflow-y-auto absolute z-10'>
           {suggestions.map((airport, index) => (
             <div
               key={index}

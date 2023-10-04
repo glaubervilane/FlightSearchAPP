@@ -7,22 +7,26 @@ const InputDate = ({selectedOption, departureDate, setDepartureDate, returnDate,
   
   const handleDepartureDate = (newValue) => {
     const formattedDate = dayjs(newValue).format('YYYY-MM-DD');
+    console.log('Selected Departure Date:', formattedDate);
     setDepartureDate(formattedDate);
   };
 
   const handleReturnDate = (newValue) => {
     const formattedDate = dayjs(newValue).format('YYYY-MM-DD');
+    console.log('Selected Return Date:', formattedDate);
     setReturnDate(formattedDate);
   };
+  
+  const maxSelectableDate = dayjs().add(10, 'month');
 
   const disablePast = true;
   return (
-    <div className="flex px-[1rem] py-4 mb-1 justify-center text-center">
+    <div className="flex px-[1rem] mb-1 justify-center text-center">
         <LocalizationProvider  dateAdapter={AdapterDayjs} label="Responsive Variant">
             <DatePicker label="Departure"  disablePast={disablePast} views={['month', 'day']} required 
               value={departureDate}
               onChange={handleDepartureDate}
-              
+              maxDate={maxSelectableDate}
             /> 
 
             <div className="flex-grow p-2"></div>
@@ -31,7 +35,9 @@ const InputDate = ({selectedOption, departureDate, setDepartureDate, returnDate,
           {selectedOption === 'Round Trip' && (
             <DatePicker label="Return" disablePast={disablePast} views={['month', 'day']}
             value={returnDate}
-            onChange={handleReturnDate} />
+            onChange={handleReturnDate}
+            maxDate={maxSelectableDate}
+             />
           )}
         </LocalizationProvider>
     </div>

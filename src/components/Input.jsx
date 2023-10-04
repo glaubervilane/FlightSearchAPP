@@ -5,6 +5,7 @@ import InputDest from './InputDest'
 import InputOrig from './InputOrig'
 import airportData from "./airports.json";
 import fetchFromAPI from './utils/fetchFromAPI';
+import dayjs from 'dayjs';
 
 
 const Input = () => {
@@ -12,8 +13,8 @@ const Input = () => {
   const [destCode, setDestCode] = useState("")
   const [originSkyId, setOriginSkyId] = useState(null);
   const [destSkyId, setDestSkyId] = useState(null);
-  const [departureDate, setDepartureDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
+  const [departureDate, setDepartureDate] = useState(null);
+  const [returnDate, setReturnDate] = useState(null);
   const [flightData, setFlightData] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Round Trip");
 
@@ -83,10 +84,8 @@ const Input = () => {
     e.preventDefault();
     console.log(`departure: ${originCode}`);
     console.log(`destination: ${destCode}`);
-    console.log(`departureDate: ${departureDate}`);
-    console.log(`returnDate: ${returnDate}`);
 
-    if (!originCode || !destCode || !departureDate || !returnDate) {
+    if (!originCode || !destCode || !departureDate || (selectedOption === 'Round Trip' && !returnDate)) {
       console.log("Please fill in all required fields");
       return;
     }

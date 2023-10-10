@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const InputOrig = ({ airportData, setOriginCode, fetchDataOrig, setOriginSkyId }) => {
-  const [value, setValue] = useState("");
+const InputOrig = ({ value, airportData, setOriginCode, fetchDataOrig, setOriginSkyId }) => {
   const [suggestions, setSuggestions] = useState([]);
   const maxSuggestions = 25;
   const inputRef = useRef(null);
@@ -22,7 +21,7 @@ const InputOrig = ({ airportData, setOriginCode, fetchDataOrig, setOriginSkyId }
 
   const onChange = (event) => {
     const inputValue = event.target.value;
-    setValue(inputValue);
+    setOriginCode(inputValue);
 
 
     const filteredSuggestions = airportData
@@ -45,9 +44,8 @@ const InputOrig = ({ airportData, setOriginCode, fetchDataOrig, setOriginSkyId }
   };
 
   const handleSuggestionClick = async (code) => {
-    setValue(code.toUpperCase());
-    setSuggestions([]);
     setOriginCode(code.toUpperCase());
+    setSuggestions([]);
 
     try{
       const entityId = await fetchDataOrig(code.toUpperCase());
@@ -70,7 +68,7 @@ const InputOrig = ({ airportData, setOriginCode, fetchDataOrig, setOriginSkyId }
         text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 
         dark:bg-gray-700 dark:border-gray-500 dark:placeholder-white dark:hover:border-white
          dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-          hover:border-gray-700 w-full"
+          hover:border-gray-700 w-full transition duration-200 ease-in-out"
         placeholder="Where From?"
         required
         value={value}

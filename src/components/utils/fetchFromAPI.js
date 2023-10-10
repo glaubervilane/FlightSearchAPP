@@ -1,11 +1,12 @@
-async function fetchFromAPI(originSkyId, destinationSkyId, departureDate, returnDate) {
+async function fetchFromAPI(originCode, destCode, originSkyId, destSkyId, departureDate, returnDate) {
     try {
-      let url = `https://sky-scrapper.p.rapidapi.com/api/v1/flights/searchFlights?originSkyId=${originSkyId}&destinationSkyId=${destinationSkyId}&date=${departureDate}&adults=1&currency=USD&market=en-US&countryCode=US`;
-  
-      if (returnDate && returnDate !== '') {
-        url += `&returnDate=${returnDate}`
-      }
-      
+        let url = `https://sky-scrapper.p.rapidapi.com/api/v1/flights/searchFlights?originSkyId=${originCode}&destinationSkyId=${destCode}&originEntityId=${originSkyId}&destinationEntityId=${destSkyId}&date=${departureDate}`;
+
+        if (returnDate && returnDate !== '') {
+            url += `&returnDate=${returnDate}`;
+        }
+
+        url += `&adults=1&currency=USD&market=en-US&countryCode=US`;
       
       const options = {
         method: 'GET',
@@ -14,7 +15,7 @@ async function fetchFromAPI(originSkyId, destinationSkyId, departureDate, return
           'X-RapidAPI-Host': 'sky-scrapper.p.rapidapi.com',
         },
       };
-  
+
       const response = await fetch(url, options);
       if (!response.ok) {
         throw new Error('Network response was not ok');

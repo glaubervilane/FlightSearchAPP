@@ -21,7 +21,7 @@ const InputDate = ({selectedOption, departureDate, setDepartureDate, returnDate,
 
   const disablePast = true;
   return (
-    <div className="flex px-[1rem] mb-1 justify-center text-center">
+    <div className="flex py-3 px-[1rem] mb-1 justify-center text-center">
         <LocalizationProvider  dateAdapter={AdapterDayjs} label="Responsive Variant">
             <DatePicker label="Departure"  disablePast={disablePast} views={['month', 'day']} required 
               value={departureDate}

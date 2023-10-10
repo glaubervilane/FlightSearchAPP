@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ArrowsRightLeftIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import InputDate from './InputDate'
 import InputDest from './InputDest'
 import InputOrig from './InputOrig'
 import airportData from "./airports.json";
 import fetchFromAPI from './utils/fetchFromAPI';
-import dayjs from 'dayjs';
 
-
-const Input = () => {
+const Input = ({ setFlightData, setIsLoading }) => {
   const [originCode, setOriginCode] = useState("")
   const [destCode, setDestCode] = useState("")
   const [originSkyId, setOriginSkyId] = useState(null);
   const [destSkyId, setDestSkyId] = useState(null);
   const [departureDate, setDepartureDate] = useState(null);
   const [returnDate, setReturnDate] = useState(null);
-  const [flightData, setFlightData] = useState([]);
   const [selectedOption, setSelectedOption] = useState("Round Trip");
 
   const fetchDataOrig = async (originCode) => {
@@ -82,43 +79,47 @@ const Input = () => {
 
   const handleExploreClick = async (e) => {
     e.preventDefault();
-    console.log(`departure: ${originCode}`);
-    console.log(`destination: ${destCode}`);
+    setIsLoading(true);
 
+    const returnDateParam = selectedOption === 'Round Trip' ? returnDate : undefined;
     if (!originCode || !destCode || !departureDate || (selectedOption === 'Round Trip' && !returnDate)) {
-      console.log("Please fill in all required fields");
+      alert("Please fill in all required fields");
       return;
     }
 
     try {
-      const data = await fetchFromAPI(originSkyId, destSkyId, departureDate, returnDate);
+      const data = await fetchFromAPI(originCode, destCode, originSkyId, destSkyId, departureDate, returnDateParam);
+
       console.log("Raw fetch response:", data);
 
-      if (!data.ok) {
-        console.log("Fetch failed", data.status, data.statusText);
+      if (!data || data.status === false) {
+        console.error("API Error:", data.message);
         return;
       }
 
-      const textData = data.text();
-      console.log("Text data:", textData);
-
-      const jsonData = JSON.parse(textData);
-      console.log("JSON data:", jsonData);
-
-      setFlightData(jsonData);
+      setFlightData(data.data.itineraries);
+      setIsLoading(false);
       
     } catch (error) {
       console.error("An error occured:", error);
+      setIsLoading(false);
     }
   };
   
+  const handleSwitch = () => {
+    const tempOriginCode = originCode;
+    const tempOriginSkyId = originSkyId;
+
+    setOriginCode(destCode);
+    setDestCode(tempOriginCode);
+
+    setOriginSkyId(destSkyId);
+    setDestSkyId(tempOriginSkyId);
+  }
+
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
-
-  useEffect(() => {
-    console.log(flightData);
-  }, [flightData]);
   
 
   return (
@@ -139,17 +140,17 @@ const Input = () => {
           <div className="flex px-4 py-3 mb-6 justify-center items-center">
 
               {/* input flight origin */}
-              <InputOrig airportData={airportData} fetchDataOrig={fetchDataOrig} setOriginCode={setOriginCode} setOriginSkyId={setOriginSkyId} />
+              <InputOrig airportData={airportData} value={originCode} fetchDataOrig={fetchDataOrig} setOriginCode={setOriginCode} setOriginSkyId={setOriginSkyId} />
           
               {/* Spacer */}
               <div className="flex-grow"></div>
               {/* Icon */}
-              <ArrowsRightLeftIcon className="h-8 w-7 drop-shadow-md hover:stroke-2" />
+              <ArrowsRightLeftIcon className="h-8 w-7 drop-shadow-md hover:stroke-2" onClick={handleSwitch} />
               {/* Spacer */}
               <div className="flex-grow"></div>
 
               {/* input flight Destination */}
-              <InputDest airportData={airportData} fetchDataDest={fetchDataDest} setDestCode={setDestCode} setDestSkyId={setDestSkyId} />
+              <InputDest airportData={airportData} value={destCode} fetchDataDest={fetchDataDest} setDestCode={setDestCode} setDestSkyId={setDestSkyId} />
           </div>
 
           <InputDate 

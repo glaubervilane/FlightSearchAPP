@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const InputDest = ({ airportData, setDestCode, fetchDataDest, setDestSkyId }) => {
-  const [value, setValue] = useState("");
+const InputDest = ({ value, airportData, setDestCode, fetchDataDest, setDestSkyId }) => {
   const [suggestions, setSuggestions] = useState([]);
   const maxSuggestions = 25;
   const inputRef = useRef(null);
@@ -23,7 +22,7 @@ const InputDest = ({ airportData, setDestCode, fetchDataDest, setDestSkyId }) =>
 
   const onChange = (event) => {
     const inputValue = event.target.value.toLowerCase();
-    setValue(inputValue);
+    setDestCode(inputValue);
 
     const filteredSuggestions = airportData
       .filter((airport) => airport.code.toLowerCase().includes(inputValue))
@@ -45,9 +44,8 @@ const InputDest = ({ airportData, setDestCode, fetchDataDest, setDestSkyId }) =>
   };
 
   const handleSuggestionClick = async (code) => {
-    setValue(code.toUpperCase());
-    setSuggestions([]);
     setDestCode(code.toUpperCase());
+    setSuggestions([]);
 
     try {
       const entityId = await fetchDataDest(code.toUpperCase());
@@ -70,7 +68,7 @@ const InputDest = ({ airportData, setDestCode, fetchDataDest, setDestSkyId }) =>
         text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 
         dark:bg-gray-700 dark:border-gray-500 dark:placeholder-white dark:hover:border-white
          dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
-          hover:border-gray-700 w-full"
+          hover:border-gray-700 w-full transition duration-200 ease-in-out"
         placeholder="Where To?"
         required
         value={value}

@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
+import PacmanLoader from "react-spinners/PacmanLoader";
 
-const FlightList = ({ flightData }) => {
-    const [displayCount, setDisplayCount] = useState(7);
+const FlightList = ({ flightData, isLoading }) => {
+    const [displayCount, setDisplayCount] = useState(5);
 
 
     if (!Array.isArray(flightData)) {
@@ -10,18 +11,21 @@ const FlightList = ({ flightData }) => {
 
     const handleShowMore = () => {
         setDisplayCount(displayCount => {
-            console.log('Increasing displayCount from', displayCount, 'to', displayCount + 7);
-            return displayCount + 7;
+            return displayCount + 5;
         });
     };
     
+    const flightListHeight = isLoading ? "40vh" : "auto";
 
     const sortedItineraries = flightData.sort((a, b) => 
         a.legs[0].stopCount - b.legs[0].stopCount
     ).slice(0, displayCount);
 
     return (
-        <div className="p-4 space-y-10">
+        <div className="p-4 space-y-10 relative " style={{height: flightListHeight}}>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 40}}>
+                {isLoading ? <PacmanLoader loading={isLoading} color="#d5d5d5" size={100} width={"50%"} height={10}   speedMultiplier={0.5}/> : null}
+            </div>
             {sortedItineraries.map((itinerary, index) => (
                 <div key={index} className="bg-white p-4 rounded shadow-lg transition duration-150 ease-in-out hover:shadow-xl space-y-2">
                     <h2 className="text-xl font-bold">Itinerary #{index + 1}</h2>

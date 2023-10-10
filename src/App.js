@@ -2,7 +2,6 @@ import './App.css';
 import  homebg  from './assets/imgs/homebg.jpg';
 import { FlightList, Footer, Input } from './components';
 import React, { useState } from 'react';
-import BarLoader from "react-spinners/BarLoader";
 
 function App() {
   const [flightData, setFlightData] = useState([]);
@@ -16,11 +15,7 @@ function App() {
           <Input setFlightData={setFlightData} setIsLoading={setIsLoading} />
         </div>
       </div>
-      <FlightList flightData={flightData} />
-      <div >
-        {isLoading ? <BarLoader className=" justify-center items-center bg-opacity-90 absolute top-0 left-0 z-40" loading={isLoading} color="#d5d5d5" size={100} /> : null}
-      </div>
-
+      <FlightList flightData={flightData} isLoading={isLoading} />
       <div>
       <Footer />
       </div>

@@ -1,9 +1,21 @@
 import React, {useState} from 'react';
 import PacmanLoader from "react-spinners/PacmanLoader";
+import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
+
 
 const FlightList = ({ flightData, isLoading }) => {
     const [displayCount, setDisplayCount] = useState(5);
 
+    const formatTime = (dateStr) => {
+        const date = new Date(dateStr);
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    };
+
+    const formatDuration = (minutes) => {
+        const hrs = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        return `${hrs}h ${mins}m`;
+    };
 
     if (!Array.isArray(flightData)) {
         return null;
@@ -22,38 +34,44 @@ const FlightList = ({ flightData, isLoading }) => {
     ).slice(0, displayCount);
 
     return (
-        <div className="p-4 space-y-10 relative " style={{height: flightListHeight}}>
+        <div className="p-4 relative flex justify-center" style={{height: flightListHeight}}>
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 40}}>
-                {isLoading ? <PacmanLoader loading={isLoading} color="#d5d5d5" size={100} width={"50%"} height={10}   speedMultiplier={0.5}/> : null}
+                {isLoading ? <PacmanLoader loading={isLoading} color="#d5d5d5" size={100} width={"50%"} height={10} speedMultiplier={0.5}/> : null}
             </div>
-            {sortedItineraries.map((itinerary, index) => (
-                <div key={index} className="bg-white p-4 rounded shadow-lg transition duration-150 ease-in-out hover:shadow-xl space-y-2">
-                    <h2 className="text-xl font-bold">Itinerary #{index + 1}</h2>
+            <div className="w-full max-w-2xl">
+                {sortedItineraries.map((itinerary, index) => (
+                    <div key={index} className="bg-white p-6 rounded-lg shadow-lg transition duration-150 ease-in-out hover:shadow-xl space-y-3 border border-gray-200 mb-4">
                     {itinerary.legs.map((leg, legIndex) => (
-                        <div key={legIndex} className="flex justify-between items-center border-t pt-2">
-                            <div>
-                                <p><strong>Origin:</strong> {leg.origin.name} ({leg.origin.displayCode})</p>
-                                <p><strong>Destination:</strong> {leg.destination.name} ({leg.destination.displayCode})</p>
+                        <div key={legIndex} className="flex flex-col md:flex-row justify-between items-stretch pt-2 space-y-2 md:space-y-0">
+                            <div className="flex items-center space-x-4">
+                                <img src={leg.carriers.marketing[0].logoUrl} alt={leg.carriers.marketing[0].name} className="h-10 w-10 mr-3" />
+                                <div>
+                                    <p className="text-lg md:xl font-semibold">{formatTime(leg.departure)}</p>
+                                    <p><strong className="text-xl md:2xl">{leg.origin.displayCode}</strong></p>
+                                </div>
+                                <ArrowLongRightIcon className="h-6 w-6 md:h-10 md:w-20" />
+                                <div>
+                                    <p className="text-lg md:xl font-semibold">{formatTime(leg.arrival)}</p>
+                                    <p><strong className="text-xl md:2xl">{leg.destination.displayCode}</strong></p>
+                                </div>
                             </div>
-                            <div>
-                                <p><strong>Departure:</strong> {new Date(leg.departure).toLocaleString()}</p>
-                                <p><strong>Arrival:</strong> {new Date(leg.arrival).toLocaleString()}</p>
+                            <div className="flex flex-col justify-center items-center md:items-end mt-2 md:mt-0">
+                                <p className="text-lg font-semibold">{formatDuration(leg.durationInMinutes)}</p>
+                                <p className='text-lg md:xl font-bold'> {leg.stopCount === 0 ? 'Nonstop' : <> <strong>Stops:</strong> {leg.stopCount} </> } </p>
+                                </div>
                             </div>
-                            <div>
-                                <p><strong>Carrier:</strong> {leg.carriers.marketing[0].name}</p>
-                                <p><strong>Stops:</strong> {leg.stopCount}</p>
-                            </div>
-                        </div>
-                    ))}
-                    <p className="text-right font-bold">Price: {itinerary.price.formatted}</p>
-                </div>
-            ))}
-                <div className='flex justify-center mt-4'>
-                    {flightData.length > displayCount && <button onClick={handleShowMore}
-                    className="py-2 px-4 border border-gray-300 rounded-xl bg-gray hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-300 transition duration-150 ease-in-out"
-                    >Show More</button>}
-                </div>      
-            </div>  
+                        ))}
+                        <p className="text-right text-xl md:2xl font-bold">Price: {itinerary.price.formatted}</p>
+                    </div>
+                ))}
+            <div className='flex justify-center mt-4 w-full'>
+                {flightData.length > displayCount && <button onClick={handleShowMore}
+                className="py-2 px-4 border border-gray-300 rounded-xl bg-gray hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-300 transition duration-150 ease-in-out"
+                >Show More</button>}
+            </div> 
+            </div>
+                 
+        </div>  
     );
 }
 

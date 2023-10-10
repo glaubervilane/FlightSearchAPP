@@ -5,6 +5,7 @@ import InputDest from './InputDest'
 import InputOrig from './InputOrig'
 import airportData from "./airports.json";
 import fetchFromAPI from './utils/fetchFromAPI';
+import dayjs from 'dayjs';
 
 const Input = ({ setFlightData, setIsLoading }) => {
   const [originCode, setOriginCode] = useState("")
@@ -79,13 +80,20 @@ const Input = ({ setFlightData, setIsLoading }) => {
 
   const handleExploreClick = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
 
     const returnDateParam = selectedOption === 'Round Trip' ? returnDate : undefined;
     if (!originCode || !destCode || !departureDate || (selectedOption === 'Round Trip' && !returnDate)) {
       alert("Please fill in all required fields");
       return;
     }
+
+    if (selectedOption === 'Round Trip' && dayjs(returnDate).isBefore(departureDate)) {
+      alert('Please check dates.');
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
 
     try {
       const data = await fetchFromAPI(originCode, destCode, originSkyId, destSkyId, departureDate, returnDateParam);
@@ -94,8 +102,16 @@ const Input = ({ setFlightData, setIsLoading }) => {
 
       if (!data || data.status === false) {
         console.error("API Error:", data.message);
+        setIsLoading(false);
         return;
       }
+
+      if (data.data.itineraries.length === 0) {
+        alert("Invalid airport code or no available flights.");
+        setIsLoading(false);
+        return;
+      }
+
 
       setFlightData(data.data.itineraries);
       setIsLoading(false);

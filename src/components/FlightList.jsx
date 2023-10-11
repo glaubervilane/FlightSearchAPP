@@ -44,7 +44,7 @@ const FlightList = ({ flightData, isLoading }) => {
                     {itinerary.legs.map((leg, legIndex) => (
                         <div key={legIndex} className="flex flex-col md:flex-row justify-between items-stretch pt-2 space-y-2 md:space-y-0">
                             <div className="flex items-center space-x-4">
-                                <img src={leg.carriers.marketing[0].logoUrl} alt={leg.carriers.marketing[0].name} className="h-10 w-10 mr-3 rounded-lg border outline" />
+                                <img src={leg.carriers.marketing[0].logoUrl} alt={leg.carriers.marketing[0].name} className="h-10 w-10 mr-3 rounded-lg dark:border dark:outline" />
                                 <div>
                                     <p className="text-lg md:xl font-semibold">{formatTime(leg.departure)}</p>
                                     <p><strong className="text-xl md:2xl">{leg.origin.displayCode}</strong></p>

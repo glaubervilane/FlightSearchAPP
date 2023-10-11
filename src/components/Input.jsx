@@ -73,7 +73,7 @@ const Input = ({ setFlightData, setIsLoading }) => {
           }
         }
       } catch (error) {
-        console.log("Error in fetchDataOrig: ", error);
+        console.log("Error in fetchDataDest: ", error);
         return null;
       }
     };
@@ -108,8 +108,8 @@ const Input = ({ setFlightData, setIsLoading }) => {
       }
 
       if (data.data.itineraries.length === 0) {
-        alert("Invalid airport code or no available flights.");
         setIsLoading(false);
+        alert("Invalid or no available flights.");
         return;
       }
 
@@ -123,6 +123,7 @@ const Input = ({ setFlightData, setIsLoading }) => {
     }
   };
   
+  //this handles the arrow switch codes -TS
   const handleSwitch = () => {
     const tempOriginCode = originCode;
     const tempOriginSkyId = originSkyId;

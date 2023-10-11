@@ -35,7 +35,7 @@ const InputOrig = ({ value, airportData, setOriginCode, fetchDataOrig, setOrigin
           const tzMatch =
             airport.tz &&
             airport.tz.toLowerCase().split('/')[1].includes(inputValue); // Search for the second part of tz
-          return !codeMatch && (cityMatch || countryMatch || stateMatch || tzMatch);
+          return !codeMatch && !cityMatch && ( countryMatch || stateMatch || tzMatch);
         })
       )
       .slice(0, maxSuggestions);
@@ -84,7 +84,7 @@ const InputOrig = ({ value, airportData, setOriginCode, fetchDataOrig, setOrigin
               onClick={() => handleSuggestionClick(airport.code)}
             >
               <div className=''>{airport.state || airport.country}</div>
-              <div className='mr-1'>{airport.city}</div>
+              <div className='mr-1.5'>{airport.city}</div>
               <div className=''>{airport.code}</div>
             </div>
           ))}

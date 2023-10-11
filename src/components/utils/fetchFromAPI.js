@@ -11,7 +11,7 @@ async function fetchFromAPI(originCode, destCode, originSkyId, destSkyId, depart
       const options = {
         method: 'GET',
         headers: {
-          'X-RapidAPI-Key': '83e554ecd8msh69bcf65b0f9c18dp1750dajsn45f4162b8488',
+          'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
           'X-RapidAPI-Host': 'sky-scrapper.p.rapidapi.com',
         },
       };

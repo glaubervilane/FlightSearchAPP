@@ -23,19 +23,20 @@ const Input = ({ setFlightData, setIsLoading }) => {
           {
             method: 'GET',
             headers: {
-              'X-RapidAPI-Key': '83e554ecd8msh69bcf65b0f9c18dp1750dajsn45f4162b8488',
+              'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
               'X-RapidAPI-Host': 'sky-scrapper.p.rapidapi.com',
             },
           }
         );
         const result = await response.json();
-        //checks the status of API endpoint
+
+        //check the status of API endpoint-TS
         if (result.status !== true) {
           console.log("API returned a false status");
           return null;
         }
 
-        //loop through the data to find airport match        
+        //loop through the data to find airport match-TS       
         for (let i = 0; i < result.data.length; i++) {
           if (result.data[i].skyId === originCode) {
             return result.data[i].entityId;
@@ -54,18 +55,18 @@ const Input = ({ setFlightData, setIsLoading }) => {
           {
             method: 'GET',
             headers: {
-              'X-RapidAPI-Key': '83e554ecd8msh69bcf65b0f9c18dp1750dajsn45f4162b8488',
+              'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
               'X-RapidAPI-Host': 'sky-scrapper.p.rapidapi.com',
             },
           }
         );
         const result = await response.json();
-        //checks the status of API endpoint
+
         if (result.status !== true) {
           console.log("API returned a false status");
           return null;
         }
-        //loop through the data to find airport match
+        //this loops through the data to find airport match-TS
         for (let i = 0; i < result.data.length; i++) {
           if (result.data[i].skyId === destCode) {
             return result.data[i].entityId;
@@ -87,7 +88,7 @@ const Input = ({ setFlightData, setIsLoading }) => {
       return;
     }
 
-    if (selectedOption === 'Round Trip' && dayjs(returnDate).isBefore(departureDate)) {
+    if (selectedOption === 'Round Trip' && returnDate && departureDate && dayjs(returnDate).isBefore(departureDate)) {
       alert('Please check dates.');
       setIsLoading(false);
       return;
@@ -155,7 +156,7 @@ const Input = ({ setFlightData, setIsLoading }) => {
             
           <div className="flex px-4 py-3 mb-6 justify-center items-center">
 
-              {/* input flight origin */}
+              {/* input flight origin -TS*/}
               <InputOrig airportData={airportData} value={originCode} fetchDataOrig={fetchDataOrig} setOriginCode={setOriginCode} setOriginSkyId={setOriginSkyId} />
           
               {/* Spacer */}
@@ -165,7 +166,7 @@ const Input = ({ setFlightData, setIsLoading }) => {
               {/* Spacer */}
               <div className="flex-grow"></div>
 
-              {/* input flight Destination */}
+              {/* input flight Destination -TS*/}
               <InputDest airportData={airportData} value={destCode} fetchDataDest={fetchDataDest} setDestCode={setDestCode} setDestSkyId={setDestSkyId} />
           </div>
 

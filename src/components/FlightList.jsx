@@ -40,11 +40,11 @@ const FlightList = ({ flightData, isLoading }) => {
             </div>
             <div className="w-full max-w-2xl">
                 {sortedItineraries.map((itinerary, index) => (
-                    <div key={index} className="bg-white p-6 rounded-lg shadow-lg transition duration-150 ease-in-out hover:shadow-xl space-y-3 border border-gray-200 mb-4">
+                    <div key={index} className="bg-white dark:bg-slate-600 p-6 rounded-lg shadow-lg transition duration-150 ease-in-out hover:shadow-xl space-y-3 border border-gray-200 mb-4">
                     {itinerary.legs.map((leg, legIndex) => (
                         <div key={legIndex} className="flex flex-col md:flex-row justify-between items-stretch pt-2 space-y-2 md:space-y-0">
                             <div className="flex items-center space-x-4">
-                                <img src={leg.carriers.marketing[0].logoUrl} alt={leg.carriers.marketing[0].name} className="h-10 w-10 mr-3" />
+                                <img src={leg.carriers.marketing[0].logoUrl} alt={leg.carriers.marketing[0].name} className="h-10 w-10 mr-3 rounded-lg border outline" />
                                 <div>
                                     <p className="text-lg md:xl font-semibold">{formatTime(leg.departure)}</p>
                                     <p><strong className="text-xl md:2xl">{leg.origin.displayCode}</strong></p>
@@ -61,12 +61,12 @@ const FlightList = ({ flightData, isLoading }) => {
                                 </div>
                             </div>
                         ))}
-                        <p className="text-right text-xl md:2xl font-bold">Price: {itinerary.price.formatted}</p>
+                        <p className="text-right text-xl md:2xl font-bold dark:text-slate-200 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">Price: {itinerary.price.formatted}</p>
                     </div>
                 ))}
             <div className='flex justify-center mt-4 w-full'>
                 {flightData.length > displayCount && <button onClick={handleShowMore}
-                className="py-2 px-4 border border-gray-300 rounded-xl bg-gray hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-300 transition duration-150 ease-in-out"
+                className="py-2 px-4 border border-gray-300 dark:bg-slate-500 dark:hover:bg-slate-700 rounded-xl bg-gray hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-300 transition duration-150 ease-in-out"
                 >Show More</button>}
             </div> 
             </div>

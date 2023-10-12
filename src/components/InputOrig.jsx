@@ -35,8 +35,8 @@ const InputOrig = ({ value, airportData, setOriginCode, fetchDataOrig, setOrigin
           const tzMatch =
             airport.tz &&
             airport.tz.toLowerCase().split('/')[1].includes(inputValue); // Search for the second part of tz
-          return !codeMatch && !cityMatch && ( countryMatch || stateMatch || tzMatch);
-        })
+            return !codeMatch && (cityMatch || countryMatch || stateMatch || tzMatch);
+          })
       )
       .slice(0, maxSuggestions);
 

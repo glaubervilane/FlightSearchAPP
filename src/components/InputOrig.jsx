@@ -20,7 +20,7 @@ const InputOrig = ({ value, airportData, setOriginCode, fetchDataOrig, setOrigin
   }, []);
 
   const onChange = (event) => {
-    const inputValue = event.target.value;
+    const inputValue = event.target.value.toLowerCase();
     setOriginCode(inputValue);
 
 

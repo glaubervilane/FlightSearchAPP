@@ -2,6 +2,7 @@ import './App.css';
 import  homebg  from './assets/imgs/homebg.jpg';
 import { FlightList, Footer, Input } from './components';
 import React, { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const [flightData, setFlightData] = useState([]);
@@ -19,6 +20,7 @@ function App() {
       <div>
       <Footer />
       </div>
+      <Analytics />
     </div>
   );
 }

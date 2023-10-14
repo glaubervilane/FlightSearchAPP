@@ -142,7 +142,7 @@ const Input = ({ setFlightData, setIsLoading }) => {
 
   return (
     <>
-    <div className="rounded-b-[1rem] md:rounded-lg md:px-1 md:translate-y-6 ring-1 shadow-xl ring-slate-900/5">
+    <div className="rounded-b-[1rem] md:rounded-lg md:px-1 md:translate-y-6 ring-1 shadow-3xl ring-slate-900/5">
       <form className=" flex-col items-center py-2">
         <div className="p-2 text-center text-3xl md:text-5xl"> Flights </div>
           

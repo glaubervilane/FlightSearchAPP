@@ -65,8 +65,8 @@ const InputOrig = ({ value, airportData, setOriginCode, fetchDataOrig, setOrigin
     <div className='w-[45%]' ref={inputRef}>
       <input
         type="text"
-        className="search-bar ml-auto text-left bg-gray-50 border border-gray-300 text-gray-900 
-        text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 
+        className="search-bar ml-auto text-left  bg-gray-50 border border-gray-300 text-gray-900 
+        text-[16px] rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 
         dark:bg-gray-700 dark:border-gray-500 dark:placeholder-white dark:hover:border-white
          dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
           hover:border-gray-700 w-full transition duration-200 ease-in-out"

@@ -21,8 +21,9 @@ const InputDest = ({ value, airportData, setDestCode, fetchDataDest, setDestSkyI
   }, []);
 
   const onChange = (event) => {
+    const rawInputValue = event.target.value
     const inputValue = event.target.value.toLowerCase();
-    setDestCode(inputValue);
+    setDestCode(rawInputValue);
 
     const filteredSuggestions = airportData
       .filter((airport) => airport.code.toLowerCase().includes(inputValue))

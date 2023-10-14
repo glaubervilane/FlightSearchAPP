@@ -20,8 +20,9 @@ const InputOrig = ({ value, airportData, setOriginCode, fetchDataOrig, setOrigin
   }, []);
 
   const onChange = (event) => {
+    const rawInputValue = event.target.value
     const inputValue = event.target.value.toLowerCase();
-    setOriginCode(inputValue);
+    setOriginCode(rawInputValue);
 
 
     const filteredSuggestions = airportData
